@@ -1,0 +1,13 @@
+xCATmgr is a utility to help manage clusters managed by xCAT (http://xcat.sourceforge.net).	It is a simple Tkinter application that uses xcat commands (not tab files) to display a representation of an xCAT managed cluster and allows you to perform simple operations on nodes
+
+If you're not running this on your management node (xCAT) then you'll need ssh keys hooked up to login to your management node without requiring a password.  You might want to checkout keychain for assistance with this.
+
+To run the tool (after easy_installing it), just run
+	xCATmgr
+
+
+TODO
+	setup an external config file (~/.xcatmgr.ini) to allow for configuration outside the egg
+	create a place in the UI for machines with unknown locations
+
+
