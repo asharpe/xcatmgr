@@ -2,12 +2,13 @@ xCATmgr is a utility to help manage clusters managed by xCAT (http://xcat.source
 
 If you're not running this on your management node (xCAT) then you'll need ssh keys hooked up to login to your management node without requiring a password.  You might want to checkout keychain for assistance with this.
 
+To start, copy xcatmgr.ini to ~/.xcatmgr.ini and edit it appropriately.  The example config file contains information on what's allowed/required in it.
+
 To run the tool (after easy_installing it), just run
-	xCATmgr
+	xCATmgr.py
 
 
 TODO
-	setup an external config file (~/.xcatmgr.ini) to allow for configuration outside the egg
 	create a place in the UI for machines with unknown locations
 
 

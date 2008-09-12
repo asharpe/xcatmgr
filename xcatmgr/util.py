@@ -1,6 +1,7 @@
-import sys, re
+import sys, re, os.path
 import logging as log
 import Tkinter as tk
+from ConfigParser import ConfigParser
 
 known_pos_re = re.compile(r"^([^:]+):\s+Room:\s+([^,]+),\s+Rack:\s+([^,]+),\s+Unit:\s+(.*)$")
 unknown_pos_re = re.compile(r"^([^:]+):\s+NO POSITION DEFINED!$")
@@ -32,4 +33,21 @@ def run_command(command):
 			return [l.strip() for l in os.popen2(" ".join(command))[1].readlines()]
 
 
+def get_config():
+	CONFIG_PATH = os.path.expanduser('~/.xcatmgr.ini')
 
+# this is for using the variable %(HOME)s inside the config
+#	c = ConfigParser({ 'HOME' : os.path.expanduser('~') })
+	c = ConfigParser()
+
+	f = file(CONFIG_PATH, 'r')
+	c.readfp(f)
+	f.close()
+
+	if not c.has_section('config'):
+		raise IOError('[config] section not found in configuration file (%s)' % CONFIG_PATH)
+#		raise IOError('configuration file not found (%s)' % CONFIG_PATH)
+
+	return dict(c.items('config'))
+
+	

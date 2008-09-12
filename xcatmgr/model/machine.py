@@ -2,7 +2,7 @@ from xcatmgr.util import *
 from xcatmgr.model.command import Command, SshRconsConsole, SshSshConsole
 from xcatmgr.model.rack import Rack
 
-from xcatmgr.ui.main import config
+#from xcatmgr.ui.main import config
 from copy import deepcopy
 
 
@@ -90,7 +90,7 @@ class MgmtNode(Machine):
 
 				rack = self._getRack(rack)
 
-				conf = deepcopy(config)
+				conf = deepcopy(get_config())
 				conf['node'] = node
 
 				command = self.command(conf, multiprocess=True)
@@ -103,7 +103,7 @@ class MgmtNode(Machine):
 					node = m.groups()
 					log.info('node: %s, location unknown' % node)
 
-					conf = deepcopy(config)
+					conf = deepcopy(get_config())
 					conf['node'] = node
 
 					command = self.command(conf, multiprocess=True)

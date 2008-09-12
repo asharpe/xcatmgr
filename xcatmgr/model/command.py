@@ -70,15 +70,15 @@ class SshRconsConsole(Command):
 	# for some really gay reason, the first argument to the ssh command
 	# needs to be quoted!!!
 	# the /bin/bash --login -i' is to load the keys for rcons command
-	command = 'ssh -t %(mgmt)s.%(domain-name)s "echo pausing for %(pre-delay)d seconds; sleep %(pre-delay)d; screen -xRR -S ssh_rcons_%(node)s /bin/bash --login -i -c \'/opt/xcat/bin/rcons %(node)s\'; echo pausing for %(post-delay)d seconds; sleep %(post-delay)d"'
+	command = 'ssh -t %(mgmt)s.%(mgmt-domain-name)s "echo pausing for %(command-pre-delay)s seconds; sleep %(command-pre-delay)s; screen -xRR -S ssh_rcons_%(node)s /bin/bash --login -i -c \'/opt/xcat/bin/rcons %(node)s\'; echo pausing for %(command-post-delay)s seconds; sleep %(command-post-delay)s"'
 
 	DISPLAY="SSH Rcons"
 
 	def __init__(self, conf, multiprocess=False):
 		# the '/bin/bash --login -i' is to load the keys for ssh command
-		Command.__init__(self, exe='%(xterm)s' % conf,
+		Command.__init__(self, exe='%(term)s' % conf,
 			args=[
-				'-e',
+				'%(term-command-opt)s' % conf,
 				'/bin/bash', '--login', '-i', '-c',
 				SshRconsConsole.command % conf
 			],
@@ -87,15 +87,15 @@ class SshRconsConsole(Command):
 
 
 class SshSshConsole(Command):
-	command = 'ssh -t %(mgmt)s.%(domain-name)s "echo pausing for %(pre-delay)d seconds; sleep %(pre-delay)d; screen -xRR -S ssh_ssh_%(node)s /bin/bash --login -i -c \'ssh %(node)s.%(cluster-domain-name)s\'; echo pausing for %(post-delay)d seconds; sleep %(post-delay)d"'
-#	command = 'echo "pausing for %(pre-delay)d seconds"; sleep %(pre-delay)d; ssh %(node)s.%(domain-name)s; echo "pausing for %(post-delay)d seconds"; sleep %(post-delay)d'
+	command = 'ssh -t %(mgmt)s.%(mgmt-domain-name)s "echo pausing for %(command-pre-delay)s seconds; sleep %(command-pre-delay)s; screen -xRR -S ssh_ssh_%(node)s /bin/bash --login -i -c \'ssh %(node)s.%(cluster-domain-name)s\'; echo pausing for %(command-post-delay)s seconds; sleep %(command-post-delay)s"'
+#	command = 'echo "pausing for %(command-pre-delay)d seconds"; sleep %(command-pre-delay)d; ssh %(node)s.%(domain-name)s; echo "pausing for %(command-post-delay)d seconds"; sleep %(command-post-delay)d'
 
 	DISPLAY="SSH SSH"
 
 	def __init__(self, conf, multiprocess=False):
-		Command.__init__(self, exe='%(xterm)s' % conf,
+		Command.__init__(self, exe='%(term)s' % conf,
 			args=[
-				'-e',
+				'%(term-command-opt)s' % conf,
 				'/bin/bash', '--login', '-i', '-c',
 				SshSshConsole.command % conf
 			],
